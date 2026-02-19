@@ -4,7 +4,8 @@ import asyncio
 from datetime import datetime, timezone
 from openai import AsyncOpenAI, APITimeoutError, RateLimitError, APIConnectionError
 from config import get_settings
-from database import embeddings_collection, documents_collection, reports_collection
+from database import documents_collection, reports_collection
+from services.vector_store import get_vector_store
 
 logger = logging.getLogger("ifrs.openai")
 settings = get_settings()
@@ -31,33 +32,14 @@ async def get_embedding(text: str) -> list[float]:
 
 
 async def retrieve_relevant_chunks(document_id: str, query: str, top_k: int = 5) -> list[str]:
-    """RAG retrieval: find most relevant chunks for a query."""
+    """RAG retrieval: find most relevant chunks for a query using FAISS."""
     query_embedding = await get_embedding(query)
 
-    # MongoDB Atlas Vector Search
-    pipeline = [
-        {
-            "$vectorSearch": {
-                "index": "embedding_index",
-                "path": "embedding",
-                "queryVector": query_embedding,
-                "numCandidates": 100,
-                "limit": top_k,
-                "filter": {"document_id": document_id},
-            }
-        },
-        {"$project": {"chunk_text": 1, "score": {"$meta": "vectorSearchScore"}}},
-    ]
-
-    chunks = []
-    async for result in embeddings_collection.aggregate(pipeline):
-        chunks.append(result["chunk_text"])
+    store = get_vector_store()
+    chunks = store.search(document_id, query_embedding, top_k)
 
     if not chunks:
-        logger.warning(f"No vector results for document {document_id}, falling back to direct lookup")
-        cursor = embeddings_collection.find({"document_id": document_id}).limit(top_k)
-        async for doc in cursor:
-            chunks.append(doc["chunk_text"])
+        logger.warning(f"No FAISS results for document {document_id}")
 
     return chunks
 

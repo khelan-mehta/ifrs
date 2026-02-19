@@ -1,6 +1,6 @@
 import tiktoken
-from database import embeddings_collection
 from services.openai_service import get_embedding
+from services.vector_store import get_vector_store
 from config import get_settings
 
 settings = get_settings()
@@ -28,23 +28,17 @@ def chunk_text(text: str, chunk_size: int = 800, overlap: int = 100) -> list[dic
 
 
 async def embed_and_store(document_id: str, text: str, metadata: dict = None):
-    """Chunk text, generate embeddings, and store in MongoDB."""
+    """Chunk text, generate embeddings, and store in FAISS."""
     chunks = chunk_text(text, settings.chunk_size, settings.chunk_overlap)
 
-    for i, chunk in enumerate(chunks):
+    embeddings = []
+    chunk_texts = []
+    for chunk in chunks:
         embedding = await get_embedding(chunk["text"])
+        embeddings.append(embedding)
+        chunk_texts.append(chunk["text"])
 
-        doc = {
-            "document_id": document_id,
-            "chunk_text": chunk["text"],
-            "embedding": embedding,
-            "metadata": {
-                "chunk_index": i,
-                "start_token": chunk["start_token"],
-                "end_token": chunk["end_token"],
-                **(metadata or {}),
-            },
-        }
-        await embeddings_collection.insert_one(doc)
+    store = get_vector_store()
+    store.add_vectors(document_id, embeddings, chunk_texts)
 
     return len(chunks)

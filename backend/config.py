@@ -15,9 +15,13 @@ class Settings(BaseSettings):
 
     # OpenAI settings
     embedding_model: str = "text-embedding-3-small"
+    embedding_dimension: int = 1536
     chat_model: str = "gpt-4o"
     chunk_size: int = 800
     chunk_overlap: int = 100
+
+    # FAISS vector store
+    faiss_index_dir: str = "./faiss_data"
 
     # File upload limits
     max_file_size_mb: int = 50
