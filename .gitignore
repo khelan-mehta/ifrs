@@ -1,0 +1,79 @@
+# =========================
+# GENERAL
+# =========================
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.swp
+
+# =========================
+# ENV FILES (IMPORTANT)
+# =========================
+.env
+backend/.env
+frontend/.env
+*.env.local
+*.env.development
+*.env.production
+
+# =========================
+# PYTHON / BACKEND
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environment
+venv/
+backend/venv/
+
+# Python build files
+build/
+dist/
+.eggs/
+*.egg-info/
+
+# =========================
+# NODE / FRONTEND
+# =========================
+node_modules/
+frontend/node_modules/
+
+# Vite build output
+dist/
+frontend/dist/
+
+# =========================
+# UPLOADS (VERY IMPORTANT)
+# =========================
+backend/uploads/
+uploads/
+
+# =========================
+# DOCKER
+# =========================
+docker-compose.override.yml
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# TEST / COVERAGE
+# =========================
+coverage/
+htmlcov/
+.pytest_cache/
+
+# =========================
+# MONGODB
+# =========================
+*.mongodb
+
+# =========================
+# CACHE
+# =========================
+.cache/
