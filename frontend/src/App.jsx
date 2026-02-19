@@ -8,10 +8,25 @@ import Climate from './pages/Climate'
 import Reports from './pages/Reports'
 import Admin from './pages/Admin'
 import Layout from './components/Layout'
+import { Shield } from 'lucide-react'
+
+function LoadingScreen() {
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-surface-50">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center">
+          <Shield size={20} className="text-white" />
+        </div>
+        <span className="text-xl font-bold text-surface-900 tracking-tight">IFRS Suite</span>
+      </div>
+      <div className="w-8 h-8 border-3 border-surface-200 border-t-primary-500 rounded-full animate-spin" />
+    </div>
+  )
+}
 
 function ProtectedRoute({ children, roles }) {
   const { user, loading } = useAuth()
-  if (loading) return <div className="flex items-center justify-center h-screen">Loading...</div>
+  if (loading) return <LoadingScreen />
   if (!user) return <Navigate to="/login" />
   if (roles && !roles.includes(user.role)) return <Navigate to="/" />
   return children

@@ -1,3 +1,4 @@
+import logging
 from fastapi import APIRouter, Depends, HTTPException
 from bson import ObjectId
 from database import compliance_collection, documents_collection
@@ -5,6 +6,7 @@ from models.schemas import ComplianceResult
 from engines.compliance_engine import run_compliance_analysis
 from utils.auth import get_current_user
 
+logger = logging.getLogger("ifrs.compliance")
 router = APIRouter()
 
 
@@ -16,8 +18,13 @@ async def run_analysis(document_id: str, user=Depends(get_current_user)):
     if doc["status"] != "completed":
         raise HTTPException(status_code=400, detail="Document still processing")
 
-    result = await run_compliance_analysis(document_id)
-    return result
+    try:
+        result = await run_compliance_analysis(document_id)
+        logger.info(f"Compliance analysis completed for document {document_id}")
+        return result
+    except Exception as e:
+        logger.error(f"Compliance analysis failed for {document_id}: {e}")
+        raise HTTPException(status_code=500, detail="Analysis failed. Please try again.")
 
 
 @router.get("/{document_id}", response_model=ComplianceResult)

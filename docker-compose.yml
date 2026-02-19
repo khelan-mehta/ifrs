@@ -8,9 +8,17 @@ services:
     env_file:
       - ./backend/.env
     depends_on:
-      - redis
+      redis:
+        condition: service_healthy
     volumes:
       - uploads:/app/uploads
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   frontend:
     build: ./frontend
@@ -18,11 +26,18 @@ services:
       - "5173:5173"
     depends_on:
       - backend
+    restart: unless-stopped
 
   redis:
     image: redis:7-alpine
     ports:
       - "6379:6379"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   uploads:

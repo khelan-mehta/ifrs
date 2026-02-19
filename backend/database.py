@@ -1,6 +1,8 @@
+import logging
 from motor.motor_asyncio import AsyncIOMotorClient
 from config import get_settings
 
+logger = logging.getLogger("ifrs.database")
 settings = get_settings()
 
 client = AsyncIOMotorClient(settings.mongodb_uri)
@@ -19,12 +21,17 @@ audit_collection = db["audit_logs"]
 
 async def init_indexes():
     """Create database indexes on startup."""
+    logger.info("Creating database indexes...")
     await users_collection.create_index("email", unique=True)
     await documents_collection.create_index("company_id")
+    await documents_collection.create_index([("company_id", 1), ("upload_date", -1)])
     await embeddings_collection.create_index("document_id")
-    await compliance_collection.create_index("document_id")
-    await climate_collection.create_index("document_id")
+    await compliance_collection.create_index("document_id", unique=True)
+    await climate_collection.create_index("document_id", unique=True)
     await reports_collection.create_index("document_id")
+    await reports_collection.create_index([("document_id", 1), ("created_at", -1)])
+    await audit_collection.create_index([("timestamp", -1)])
+    logger.info("Database indexes created successfully")
 
 
 async def close_db():

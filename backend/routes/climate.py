@@ -1,3 +1,4 @@
+import logging
 from fastapi import APIRouter, Depends, HTTPException
 from bson import ObjectId
 from database import climate_collection, documents_collection
@@ -5,6 +6,7 @@ from models.schemas import ClimateRiskResult
 from engines.risk_engine import run_climate_analysis
 from utils.auth import get_current_user
 
+logger = logging.getLogger("ifrs.climate")
 router = APIRouter()
 
 
@@ -16,8 +18,13 @@ async def analyze_climate(document_id: str, user=Depends(get_current_user)):
     if doc["status"] != "completed":
         raise HTTPException(status_code=400, detail="Document still processing")
 
-    result = await run_climate_analysis(document_id)
-    return result
+    try:
+        result = await run_climate_analysis(document_id)
+        logger.info(f"Climate analysis completed for document {document_id}")
+        return result
+    except Exception as e:
+        logger.error(f"Climate analysis failed for {document_id}: {e}")
+        raise HTTPException(status_code=500, detail="Climate analysis failed. Please try again.")
 
 
 @router.get("/{document_id}", response_model=ClimateRiskResult)
