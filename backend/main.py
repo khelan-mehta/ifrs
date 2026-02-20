@@ -6,7 +6,7 @@ from fastapi.responses import JSONResponse
 from contextlib import asynccontextmanager
 from config import get_settings
 from database import init_indexes, close_db
-from routes import auth, documents, compliance, climate, reports, dashboard, admin
+from routes import auth, documents, compliance, climate, reports, dashboard, admin, document_analysis
 
 settings = get_settings()
 
@@ -70,6 +70,7 @@ app.include_router(climate.router, prefix="/climate", tags=["Climate Risk"])
 app.include_router(reports.router, prefix="/reports", tags=["Reports"])
 app.include_router(dashboard.router, prefix="/dashboard", tags=["Dashboard"])
 app.include_router(admin.router, prefix="/admin", tags=["Admin"])
+app.include_router(document_analysis.router, prefix="/document-analysis", tags=["Document Analysis"])
 
 
 @app.get("/health")

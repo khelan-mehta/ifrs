@@ -7,6 +7,7 @@ import Compliance from './pages/Compliance'
 import Climate from './pages/Climate'
 import Reports from './pages/Reports'
 import Admin from './pages/Admin'
+import DocumentAnalysis from './pages/DocumentAnalysis'
 import Layout from './components/Layout'
 import { Shield } from 'lucide-react'
 
@@ -39,6 +40,7 @@ export default function App() {
       <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
         <Route index element={<Dashboard />} />
         <Route path="upload" element={<Upload />} />
+        <Route path="analysis/:documentId" element={<DocumentAnalysis />} />
         <Route path="compliance/:documentId" element={<Compliance />} />
         <Route path="climate/:documentId" element={<Climate />} />
         <Route path="reports/:documentId" element={<Reports />} />

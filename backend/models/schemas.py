@@ -126,6 +126,22 @@ class ReportResponse(BaseModel):
     created_at: datetime
 
 
+# --- Document Analysis (Multi-Level) ---
+
+class DocumentAnalysisResult(BaseModel):
+    id: str
+    document_id: str
+    analysis_version: str = "2.0"
+    scores: dict
+    overview: dict
+    governance: dict
+    strategy: dict
+    risk_management: dict
+    metrics_targets: dict
+    overall_assessment: dict
+    created_at: datetime
+
+
 # --- Dashboard ---
 
 class DashboardSummary(BaseModel):

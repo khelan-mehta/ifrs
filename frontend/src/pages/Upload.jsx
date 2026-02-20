@@ -12,7 +12,7 @@ import {
   CheckCircle2,
   Clock,
   XCircle,
-  
+  Zap,
 } from 'lucide-react'
 
 const statusConfig = {
@@ -156,6 +156,14 @@ export default function Upload() {
                 <div className="flex items-center gap-1">
                   {doc.status === 'completed' && (
                     <>
+                      <button
+                        onClick={() => navigate(`/analysis/${doc.id}`)}
+                        className="btn-ghost flex items-center gap-1.5 text-indigo-600"
+                        title="Full Document Analysis"
+                      >
+                        <Zap size={16} />
+                        <span className="hidden sm:inline text-xs">Analyze</span>
+                      </button>
                       <button
                         onClick={() => navigate(`/compliance/${doc.id}`)}
                         className="btn-ghost flex items-center gap-1.5 text-primary-600"

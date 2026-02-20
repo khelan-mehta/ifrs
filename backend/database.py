@@ -17,6 +17,7 @@ climate_collection = db["climate_risk"]
 reports_collection = db["generated_reports"]
 audit_collection = db["audit_logs"]
 embeddings_collection = db["embeddings"]
+document_analysis_collection = db["document_analysis"]
 
 
 
@@ -31,6 +32,7 @@ async def init_indexes():
     await reports_collection.create_index("document_id")
     await reports_collection.create_index([("document_id", 1), ("created_at", -1)])
     await audit_collection.create_index([("timestamp", -1)])
+    await document_analysis_collection.create_index("document_id", unique=True)
     logger.info("Database indexes created successfully")
 
 
