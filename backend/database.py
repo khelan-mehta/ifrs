@@ -16,6 +16,8 @@ compliance_collection = db["compliance_analysis"]
 climate_collection = db["climate_risk"]
 reports_collection = db["generated_reports"]
 audit_collection = db["audit_logs"]
+embeddings_collection = db["embeddings"]
+
 
 
 async def init_indexes():
