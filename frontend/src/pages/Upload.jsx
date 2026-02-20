@@ -100,7 +100,7 @@ export default function Upload() {
               dragOver ? 'bg-primary-100 text-primary-600' : 'bg-surface-100 text-surface-400'
             }`}
           >
-            <Upload size={28} />
+            <UploadIcon size={28} />
           </div>
           <p className="text-surface-700 font-medium mb-1">
             {dragOver ? 'Drop your file here' : 'Drag & drop a PDF report'}

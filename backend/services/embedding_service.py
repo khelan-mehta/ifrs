@@ -8,7 +8,7 @@ settings = get_settings()
 
 def chunk_text(text: str, chunk_size: int = 800, overlap: int = 100) -> list[dict]:
     """Split text into overlapping chunks using token count."""
-    enc = tiktoken.encoding_for_model("gpt-4o")
+    enc = tiktoken.get_encoding("cl100k_base")
     tokens = enc.encode(text)
     chunks = []
     start = 0
