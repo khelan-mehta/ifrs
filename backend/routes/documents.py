@@ -8,6 +8,7 @@ from database import documents_collection
 from models.schemas import DocumentResponse
 from utils.auth import get_current_user
 from services.file_service import process_document
+from services.vector_store import get_vector_store
 from config import get_settings
 
 logger = logging.getLogger("ifrs.documents")
@@ -104,5 +105,10 @@ async def delete_document(document_id: str, user=Depends(get_current_user)):
     result = await documents_collection.delete_one({"_id": ObjectId(document_id)})
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Document not found")
+
+    # Clean up FAISS index for this document
+    store = get_vector_store()
+    store.delete_document(document_id)
+
     logger.info(f"Document {document_id} deleted by {user['email']}")
     return {"message": "Document deleted"}

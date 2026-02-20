@@ -12,11 +12,12 @@ db = client[settings.database_name]
 users_collection = db["users"]
 companies_collection = db["companies"]
 documents_collection = db["documents"]
-embeddings_collection = db["embeddings"]
 compliance_collection = db["compliance_analysis"]
 climate_collection = db["climate_risk"]
 reports_collection = db["generated_reports"]
 audit_collection = db["audit_logs"]
+embeddings_collection = db["embeddings"]
+
 
 
 async def init_indexes():
@@ -25,7 +26,6 @@ async def init_indexes():
     await users_collection.create_index("email", unique=True)
     await documents_collection.create_index("company_id")
     await documents_collection.create_index([("company_id", 1), ("upload_date", -1)])
-    await embeddings_collection.create_index("document_id")
     await compliance_collection.create_index("document_id", unique=True)
     await climate_collection.create_index("document_id", unique=True)
     await reports_collection.create_index("document_id")
