@@ -68,19 +68,19 @@ export default function Upload() {
   }
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6">
       <div>
         <h1 className="page-header">Document Management</h1>
-        <p className="text-sm text-surface-500 mt-1">
-          Upload sustainability reports for AI-powered analysis
+        <p className="text-[13px] text-surface-500 mt-0.5">
+          Upload sustainability reports for analysis
         </p>
       </div>
 
       {/* Upload area */}
       <div
-        className={`border-2 border-dashed rounded-2xl p-12 text-center transition-all duration-300 ${
+        className={`border-2 border-dashed rounded-lg p-10 text-center transition-colors duration-150 ${
           dragOver
-            ? 'border-primary-400 bg-primary-50/50 shadow-glow'
+            ? 'border-primary-400 bg-primary-50/50'
             : 'border-surface-200 hover:border-surface-300 bg-white'
         }`}
         onDragOver={(e) => {
@@ -96,18 +96,18 @@ export default function Upload() {
       >
         <div className="flex flex-col items-center">
           <div
-            className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-colors ${
+            className={`w-12 h-12 rounded-lg flex items-center justify-center mb-3 transition-colors ${
               dragOver ? 'bg-primary-100 text-primary-600' : 'bg-surface-100 text-surface-400'
             }`}
           >
-            <UploadIcon size={28} />
+            <UploadIcon size={22} />
           </div>
-          <p className="text-surface-700 font-medium mb-1">
+          <p className="text-[13px] text-surface-700 font-medium mb-0.5">
             {dragOver ? 'Drop your file here' : 'Drag & drop a PDF report'}
           </p>
-          <p className="text-sm text-surface-400 mb-4">or click to browse files (max 50MB)</p>
+          <p className="text-xs text-surface-400 mb-3">or click to browse (max 50MB)</p>
           <label className="btn-primary cursor-pointer inline-flex items-center gap-2">
-            <UploadIcon size={16} />
+            <UploadIcon size={15} />
             {uploading ? 'Uploading...' : 'Choose File'}
             <input
               type="file"
@@ -122,32 +122,32 @@ export default function Upload() {
 
       {/* Document list */}
       <div>
-        <h2 className="section-header mb-4">
+        <h2 className="section-header mb-3">
           Uploaded Documents ({documents.length})
         </h2>
-        <div className="space-y-3">
+        <div className="space-y-2">
           {documents.map((doc) => {
             const status = statusConfig[doc.status] || statusConfig.processing
             const StatusIcon = status.icon
             return (
               <div
                 key={doc.id}
-                className="card-hover p-4 flex items-center justify-between"
+                className="card-hover p-3.5 flex items-center justify-between"
               >
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 bg-primary-50 rounded-xl flex items-center justify-center">
-                    <FileText size={18} className="text-primary-500" />
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-surface-100 rounded-md flex items-center justify-center">
+                    <FileText size={15} className="text-surface-500" />
                   </div>
                   <div>
-                    <p className="font-medium text-surface-900 text-sm">
+                    <p className="text-[13px] font-medium text-surface-900">
                       {doc.file_name}
                     </p>
                     <div className="flex items-center gap-2 mt-0.5">
-                      <span className="text-xs text-surface-400">
+                      <span className="text-[11px] text-surface-400">
                         {new Date(doc.upload_date).toLocaleDateString()}
                       </span>
                       <span className={status.badge}>
-                        <StatusIcon size={12} className="mr-1" />
+                        <StatusIcon size={11} className="mr-1" />
                         {status.label}
                       </span>
                     </div>
@@ -158,10 +158,10 @@ export default function Upload() {
                     <>
                       <button
                         onClick={() => navigate(`/analysis/${doc.id}`)}
-                        className="btn-ghost flex items-center gap-1.5 text-indigo-600"
+                        className="btn-ghost flex items-center gap-1.5 text-primary-600"
                         title="Full Document Analysis"
                       >
-                        <Zap size={16} />
+                        <Zap size={14} />
                         <span className="hidden sm:inline text-xs">Analyze</span>
                       </button>
                       <button
@@ -169,7 +169,7 @@ export default function Upload() {
                         className="btn-ghost flex items-center gap-1.5 text-primary-600"
                         title="Compliance Analysis"
                       >
-                        <BarChart3 size={16} />
+                        <BarChart3 size={14} />
                         <span className="hidden sm:inline text-xs">Compliance</span>
                       </button>
                       <button
@@ -177,7 +177,7 @@ export default function Upload() {
                         className="btn-ghost flex items-center gap-1.5 text-amber-600"
                         title="Climate Risk"
                       >
-                        <Thermometer size={16} />
+                        <Thermometer size={14} />
                         <span className="hidden sm:inline text-xs">Climate</span>
                       </button>
                       <button
@@ -185,28 +185,28 @@ export default function Upload() {
                         className="btn-ghost flex items-center gap-1.5 text-violet-600"
                         title="Generate Reports"
                       >
-                        <FileEdit size={16} />
+                        <FileEdit size={14} />
                         <span className="hidden sm:inline text-xs">Reports</span>
                       </button>
                     </>
                   )}
                   <button
                     onClick={() => handleDelete(doc.id)}
-                    className="btn-danger p-2"
+                    className="btn-danger p-1.5"
                     title="Delete"
                   >
-                    <Trash2 size={16} />
+                    <Trash2 size={14} />
                   </button>
                 </div>
               </div>
             )
           })}
           {documents.length === 0 && (
-            <div className="flex flex-col items-center justify-center py-12">
-              <div className="w-12 h-12 bg-surface-100 rounded-xl flex items-center justify-center mb-3">
-                <FileText size={22} className="text-surface-400" />
+            <div className="flex flex-col items-center justify-center py-10">
+              <div className="w-10 h-10 bg-surface-100 rounded-lg flex items-center justify-center mb-2">
+                <FileText size={18} className="text-surface-400" />
               </div>
-              <p className="text-sm text-surface-500">No documents uploaded yet.</p>
+              <p className="text-[13px] text-surface-500">No documents uploaded yet.</p>
               <p className="text-xs text-surface-400 mt-0.5">
                 Upload a PDF to get started
               </p>

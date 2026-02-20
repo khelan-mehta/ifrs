@@ -14,13 +14,13 @@ import { Shield } from 'lucide-react'
 function LoadingScreen() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-surface-50">
-      <div className="flex items-center gap-3 mb-6">
-        <div className="w-10 h-10 bg-primary-500 rounded-xl flex items-center justify-center">
-          <Shield size={20} className="text-white" />
+      <div className="flex items-center gap-2.5 mb-5">
+        <div className="w-8 h-8 bg-primary-600 rounded-md flex items-center justify-center">
+          <Shield size={16} className="text-white" />
         </div>
-        <span className="text-xl font-bold text-surface-900 tracking-tight">IFRS Suite</span>
+        <span className="text-base font-semibold text-surface-900 tracking-tight">IFRS Suite</span>
       </div>
-      <div className="w-8 h-8 border-3 border-surface-200 border-t-primary-500 rounded-full animate-spin" />
+      <div className="w-6 h-6 border-2 border-surface-200 border-t-primary-500 rounded-full animate-spin" />
     </div>
   )
 }

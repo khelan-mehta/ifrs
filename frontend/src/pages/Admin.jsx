@@ -55,75 +55,81 @@ export default function Admin() {
   }
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6">
       <div>
         <h1 className="page-header">Admin Panel</h1>
-        <p className="text-sm text-surface-500 mt-1">Manage users, companies, and system settings</p>
+        <p className="text-[13px] text-surface-500 mt-0.5">Manage users, companies, and system settings</p>
       </div>
 
       {/* Status messages */}
       {success && (
-        <div className="flex items-start gap-3 bg-emerald-50 text-emerald-700 text-sm rounded-xl p-4 ring-1 ring-emerald-100 animate-slide-up">
-          <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
+        <div className="flex items-start gap-2.5 bg-emerald-50 text-emerald-700 text-[13px] rounded-lg p-3">
+          <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
           <span>{success}</span>
         </div>
       )}
       {error && (
-        <div className="flex items-start gap-3 bg-red-50 text-red-700 text-sm rounded-xl p-4 ring-1 ring-red-100 animate-slide-up">
-          <AlertCircle size={18} className="mt-0.5 shrink-0" />
+        <div className="flex items-start gap-2.5 bg-red-50 text-red-700 text-[13px] rounded-lg p-3">
+          <AlertCircle size={16} className="mt-0.5 shrink-0" />
           <span>{error}</span>
         </div>
       )}
 
       {/* Create Company */}
-      <div className="card p-6">
-        <div className="flex items-center gap-3 mb-5">
-          <div className="w-9 h-9 bg-primary-50 rounded-lg flex items-center justify-center">
-            <Building2 size={18} className="text-primary-500" />
-          </div>
-          <div>
-            <h3 className="font-semibold text-surface-900 text-sm">Create Company</h3>
-            <p className="text-xs text-surface-400">Add a new organization to the platform</p>
+      <div className="card">
+        <div className="px-5 py-4 border-b border-surface-100">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 bg-surface-100 rounded-md flex items-center justify-center">
+              <Building2 size={14} className="text-surface-500" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-surface-900">Create Company</h3>
+              <p className="text-[11px] text-surface-400">Add a new organization to the platform</p>
+            </div>
           </div>
         </div>
-        <form onSubmit={createCompany} className="grid grid-cols-1 md:grid-cols-4 gap-3">
-          <input
-            value={companyName}
-            onChange={(e) => setCompanyName(e.target.value)}
-            placeholder="Company name"
-            className="input-field"
-            required
-          />
-          <input
-            value={industry}
-            onChange={(e) => setIndustry(e.target.value)}
-            placeholder="Industry"
-            className="input-field"
-            required
-          />
-          <input
-            value={region}
-            onChange={(e) => setRegion(e.target.value)}
-            placeholder="Region"
-            className="input-field"
-            required
-          />
-          <button type="submit" className="btn-primary flex items-center justify-center gap-2">
-            <Plus size={16} />
-            Create
-          </button>
-        </form>
+        <div className="p-5">
+          <form onSubmit={createCompany} className="grid grid-cols-1 md:grid-cols-4 gap-3">
+            <input
+              value={companyName}
+              onChange={(e) => setCompanyName(e.target.value)}
+              placeholder="Company name"
+              className="input-field"
+              required
+            />
+            <input
+              value={industry}
+              onChange={(e) => setIndustry(e.target.value)}
+              placeholder="Industry"
+              className="input-field"
+              required
+            />
+            <input
+              value={region}
+              onChange={(e) => setRegion(e.target.value)}
+              placeholder="Region"
+              className="input-field"
+              required
+            />
+            <button type="submit" className="btn-primary flex items-center justify-center gap-2">
+              <Plus size={15} />
+              Create
+            </button>
+          </form>
+        </div>
       </div>
 
       {/* User Management */}
-      <div className="card p-6">
-        <div className="flex items-center gap-3 mb-5">
-          <div className="w-9 h-9 bg-primary-50 rounded-lg flex items-center justify-center">
-            <Users size={18} className="text-primary-500" />
-          </div>
-          <div>
-            <h3 className="font-semibold text-surface-900 text-sm">User Management</h3>
-            <p className="text-xs text-surface-400">{users.length} registered users</p>
+      <div className="card">
+        <div className="px-5 py-4 border-b border-surface-100">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 bg-surface-100 rounded-md flex items-center justify-center">
+              <Users size={14} className="text-surface-500" />
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold text-surface-900">User Management</h3>
+              <p className="text-[11px] text-surface-400">{users.length} registered users</p>
+            </div>
           </div>
         </div>
 
@@ -131,16 +137,16 @@ export default function Admin() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-surface-100">
-                <th className="text-left py-3 px-4 text-xs font-semibold text-surface-500 uppercase tracking-wider">
+                <th className="text-left py-2.5 px-5 text-[11px] font-medium text-surface-500 uppercase tracking-wider">
                   User
                 </th>
-                <th className="text-left py-3 px-4 text-xs font-semibold text-surface-500 uppercase tracking-wider">
+                <th className="text-left py-2.5 px-4 text-[11px] font-medium text-surface-500 uppercase tracking-wider">
                   Role
                 </th>
-                <th className="text-left py-3 px-4 text-xs font-semibold text-surface-500 uppercase tracking-wider">
+                <th className="text-left py-2.5 px-4 text-[11px] font-medium text-surface-500 uppercase tracking-wider">
                   Joined
                 </th>
-                <th className="text-right py-3 px-4 text-xs font-semibold text-surface-500 uppercase tracking-wider">
+                <th className="text-right py-2.5 px-5 text-[11px] font-medium text-surface-500 uppercase tracking-wider">
                   Actions
                 </th>
               </tr>
@@ -149,31 +155,31 @@ export default function Admin() {
               {users.map((u) => (
                 <tr
                   key={u.id}
-                  className="border-b border-surface-50 hover:bg-surface-50/50 transition-colors"
+                  className="border-b border-surface-50 last:border-0 hover:bg-surface-50/50 transition-colors"
                 >
-                  <td className="py-3 px-4">
-                    <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 bg-primary-50 rounded-lg flex items-center justify-center">
-                        <Shield size={14} className="text-primary-500" />
+                  <td className="py-2.5 px-5">
+                    <div className="flex items-center gap-2.5">
+                      <div className="w-7 h-7 bg-surface-100 rounded-md flex items-center justify-center">
+                        <Shield size={12} className="text-surface-500" />
                       </div>
-                      <span className="font-medium text-surface-800">{u.email}</span>
+                      <span className="text-[13px] font-medium text-surface-800">{u.email}</span>
                     </div>
                   </td>
-                  <td className="py-3 px-4">
+                  <td className="py-2.5 px-4">
                     <span className={roleConfig[u.role] || 'badge-neutral'}>
                       {u.role}
                     </span>
                   </td>
-                  <td className="py-3 px-4 text-surface-500">
+                  <td className="py-2.5 px-4 text-[13px] text-surface-500">
                     {new Date(u.created_at).toLocaleDateString()}
                   </td>
-                  <td className="py-3 px-4 text-right">
+                  <td className="py-2.5 px-5 text-right">
                     <button
                       onClick={() => deleteUser(u.id)}
-                      className="btn-danger p-2"
+                      className="btn-danger p-1.5"
                       title="Delete user"
                     >
-                      <Trash2 size={14} />
+                      <Trash2 size={13} />
                     </button>
                   </td>
                 </tr>
@@ -184,7 +190,7 @@ export default function Admin() {
 
         {users.length === 0 && (
           <div className="flex items-center justify-center py-8">
-            <p className="text-sm text-surface-400">No users found.</p>
+            <p className="text-[13px] text-surface-400">No users found.</p>
           </div>
         )}
       </div>

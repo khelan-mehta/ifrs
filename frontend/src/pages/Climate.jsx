@@ -34,16 +34,16 @@ export default function Climate() {
   }
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-6">
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <Link to="/upload" className="inline-flex items-center gap-1.5 text-sm text-surface-500 hover:text-surface-700 mb-3 transition-colors">
-            <ArrowLeft size={14} />
+          <Link to="/upload" className="inline-flex items-center gap-1.5 text-[13px] text-surface-500 hover:text-surface-700 mb-2 transition-colors">
+            <ArrowLeft size={13} />
             Back to Documents
           </Link>
           <h1 className="page-header">Climate Risk Analysis</h1>
-          <p className="text-sm text-surface-500 mt-1">IFRS S2 physical and transition risk assessment</p>
+          <p className="text-[13px] text-surface-500 mt-0.5">IFRS S2 physical and transition risk assessment</p>
         </div>
         <button
           onClick={runAnalysis}
@@ -57,7 +57,7 @@ export default function Climate() {
             </>
           ) : (
             <>
-              {data ? <RefreshCw size={16} /> : <Play size={16} />}
+              {data ? <RefreshCw size={15} /> : <Play size={15} />}
               {data ? 'Re-run' : 'Run Analysis'}
             </>
           )}
@@ -65,32 +65,32 @@ export default function Climate() {
       </div>
 
       {error && (
-        <div className="flex items-start gap-3 bg-red-50 text-red-700 text-sm rounded-xl p-4 ring-1 ring-red-100 animate-slide-up">
-          <AlertTriangle size={18} className="mt-0.5 shrink-0" />
+        <div className="flex items-start gap-2.5 bg-red-50 text-red-700 text-[13px] rounded-lg p-3">
+          <AlertTriangle size={16} className="mt-0.5 shrink-0" />
           <span>{error}</span>
         </div>
       )}
 
       {loading ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[...Array(3)].map((_, i) => (
-            <div key={i} className="card p-6 flex flex-col items-center space-y-4">
-              <div className="skeleton w-[130px] h-[130px] rounded-full" />
-              <div className="skeleton h-4 w-24" />
+            <div key={i} className="card p-5 flex flex-col items-center space-y-3">
+              <div className="skeleton w-[110px] h-[110px] rounded-full" />
+              <div className="skeleton h-3 w-20" />
             </div>
           ))}
         </div>
       ) : data ? (
         <>
           {/* Risk scores */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="card p-6 flex flex-col items-center">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="card p-5 flex flex-col items-center">
               <ScoreDonut score={data.physical_risk_score} label="Physical Risk" />
             </div>
-            <div className="card p-6 flex flex-col items-center">
+            <div className="card p-5 flex flex-col items-center">
               <ScoreDonut score={data.transition_risk_score} label="Transition Risk" />
             </div>
-            <div className="card p-6 flex flex-col items-center">
+            <div className="card p-5 flex flex-col items-center">
               <ScoreDonut score={data.scenario_alignment_score} label="Scenario Alignment" />
             </div>
           </div>
@@ -106,12 +106,12 @@ export default function Climate() {
           <Heatmap data={data.risk_heatmap_data} />
         </>
       ) : (
-        <div className="flex flex-col items-center justify-center py-20">
-          <div className="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center mb-4">
-            <Play size={28} className="text-amber-400" />
+        <div className="flex flex-col items-center justify-center py-16">
+          <div className="w-12 h-12 bg-surface-100 rounded-lg flex items-center justify-center mb-3">
+            <Play size={22} className="text-surface-400" />
           </div>
-          <h2 className="text-lg font-semibold text-surface-800 mb-1">Ready to analyze</h2>
-          <p className="text-sm text-surface-500 text-center max-w-sm">
+          <h2 className="text-base font-semibold text-surface-800 mb-1">Ready to analyze</h2>
+          <p className="text-[13px] text-surface-500 text-center max-w-sm">
             Click "Run Analysis" to assess climate-related risks and emissions data.
           </p>
         </div>
